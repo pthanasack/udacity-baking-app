@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">BakingApp</string>
+    <string name="error_msg_catching_data">Error Catching Data</string>
+</resources>
