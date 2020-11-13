@@ -80,6 +80,7 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainDataViewHolder> {
         @Override
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
+            //use adapter position + 1 because recipe starts at id=1 and adapter poistion at 0
             String clickMainData = mMainData[adapterPosition];
             mClickHandler.onClick(clickMainData);
         }

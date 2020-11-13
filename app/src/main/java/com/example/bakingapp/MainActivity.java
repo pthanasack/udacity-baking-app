@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.MainA
         String mBaseUrl = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
         URL mRecipesUrl = NetworkUtilities.getDataURL(mApiKey, mBaseUrl, mApiKeyQueryParam);
         new loadRecipes().execute(mRecipesUrl);
-
     }
 
     @Override

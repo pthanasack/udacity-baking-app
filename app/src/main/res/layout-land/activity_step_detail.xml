@@ -25,7 +25,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/activity_step_detail_framelayout">
+        app:layout_constraintTop_toBottomOf="@id/activity_step_detail_framelayout"
+        android:visibility="gone">
 
         <Button
             android:id="@+id/previous_step_button"

@@ -30,7 +30,6 @@ class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsDataViewHolder
         Context context = parent.getContext();
         int layoutIdForListItem = R.layout.recycler_steps_layout;
         LayoutInflater inflater = LayoutInflater.from(context);
-
         View view = inflater.inflate(layoutIdForListItem, parent, false);
         return new StepsDataViewHolder(view);
     }
@@ -64,8 +63,7 @@ class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsDataViewHolder
     }
 
     public interface StepAdapterOnClickHandler {
-        void onClick(String mStepsData);
-
+        void onClick(String[] mStepsData, int position);
     }
 
     public class StepsDataViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -83,9 +81,7 @@ class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsDataViewHolder
         @Override
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
-            String clickStepData = mStepsData[adapterPosition];
-            Toast.makeText(v.getContext(), clickStepData, Toast.LENGTH_LONG).show();
-            mClickHandler.onClick(clickStepData);
+            mClickHandler.onClick(mStepsData, adapterPosition);
 
         }
     }

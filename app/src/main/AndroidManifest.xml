@@ -21,11 +21,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name="com.example.bakingapp.StepsDetailActivity"
-            android:parentActivityName="com.example.bakingapp.RecipeDetailActivity">
+        <activity android:name="com.example.bakingapp.StepDetailActivity"
+            android:parentActivityName="com.example.bakingapp.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".RecipeDetailActivity" />
+                android:value=".MainActivity" />
         </activity>
     </application>
 
