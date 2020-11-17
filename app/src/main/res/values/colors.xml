@@ -11,4 +11,7 @@
     <color name="secondaryDarkColor">#c67100</color>
     <color name="primaryTextColor">#000000</color>
     <color name="secondaryTextColor">#000000</color>
+    <color name="border_step_color">#FF9800</color>
+    <color name="selected_step_color">#FF9800</color>
+    <color name="default_step_color">#FF9800</color>
 </resources>

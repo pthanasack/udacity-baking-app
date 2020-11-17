@@ -9,6 +9,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,13 +30,17 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.MainA
         mProgressBar = (ProgressBar) findViewById(R.id.main_progress_bar);
         MainTextView = (TextView) findViewById(R.id.main_text);
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.main_recycler_view);
+/*
 
         LinearLayoutManager linearLayoutManager
                 = new LinearLayoutManager (this, LinearLayoutManager.VERTICAL, false);
 
         //Set the layoutManager on RecyclerView
         mRecyclerView.setLayoutManager(linearLayoutManager);
-
+*/
+        int grid_row_number = getResources().getInteger(R.integer.main_grid_view_column_number);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this,grid_row_number);
+        mRecyclerView.setLayoutManager(gridLayoutManager);
         //new MoviesAdapter
         mMainAdapter = new MainAdapter(this);
         //set the adapter to the RecyclerView
@@ -61,7 +66,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.MainA
         startDetailedActivityIntent.putExtra(Intent.EXTRA_TEXT, mMainData);
         //start new activity with Intent
         startActivity(startDetailedActivityIntent);
-
     }
 
 

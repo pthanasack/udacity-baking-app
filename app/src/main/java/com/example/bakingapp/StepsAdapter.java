@@ -1,7 +1,9 @@
 package com.example.bakingapp;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -13,11 +15,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsDataViewHolder> {
     //Click Handler -- Begin//
     //defines the clickhandler interface and attribute
     private final StepAdapterOnClickHandler mClickHandler;
     String[] mStepsData;
+    //List of all Textview for color change
+    public List<TextView> mTextViewList = new ArrayList<>();
 
     //default constructor that takes a clickHandler
     public StepsAdapter(StepAdapterOnClickHandler clickHandler) {
@@ -36,7 +43,7 @@ class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsDataViewHolder
     //Click Handler -- End//
 
     @Override
-    public void onBindViewHolder(@NonNull StepsDataViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final StepsDataViewHolder holder, int position) {
         String jsonStringRecipeDisplayed = mStepsData[position];
         try {
             JSONObject jsonObjectRecipeDisplayed = new JSONObject(jsonStringRecipeDisplayed);
@@ -44,6 +51,20 @@ class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsDataViewHolder
             String recipeShortStep = jsonObjectRecipeDisplayed.getString("shortDescription");
             String recipeShortStepLabel = "Recipe Step " + recipeStepNbr + ": " + recipeShortStep;
             holder.mStepsTextView.setText(recipeShortStepLabel);
+            //implement the color change onClick
+            mTextViewList.add(holder.mStepsTextView);
+            holder.mStepsTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //All card color is set to colorDefault
+                    Context context = view.getContext();
+                    for(TextView mTextViewList : mTextViewList){
+                        mTextViewList.setBackground(context.getResources().getDrawable(R.drawable.recipe_steps_list_background));
+                    }
+                    //The selected card is set to colorSelected
+                    holder.mStepsTextView.setBackground(context.getResources().getDrawable(R.drawable.selected_recipe_steps_list_background));
+                }
+            });
 
         } catch (JSONException e) {
             e.printStackTrace();

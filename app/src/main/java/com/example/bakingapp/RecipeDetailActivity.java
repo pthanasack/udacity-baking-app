@@ -18,7 +18,7 @@ import org.json.JSONObject;
 public class RecipeDetailActivity extends AppCompatActivity implements StepsAdapter.StepAdapterOnClickHandler {
     private String OUTSTATE_RECIPE_DETAILS;
     private String mRecipeDetailsString;
-
+    private JSONObject mRecipeDetailsJSONObject;
 
     //TODO 1 need to fix the back app button from StepsDetailActivity
     @Override
@@ -45,14 +45,14 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepsAdap
         try {
             assert mRecipeDetailsString != null;
             //convert the data in array format from JSON String
-            JSONObject recipeDetailsJSONObject = new JSONObject(mRecipeDetailsString);
+            mRecipeDetailsJSONObject = new JSONObject(mRecipeDetailsString);
             //get the recipe name and display it
-            String recipeNameString = recipeDetailsJSONObject.getString("name");
+            String recipeNameString = mRecipeDetailsJSONObject.getString("name");
             TextView mRecipeNameString = findViewById(R.id.activity_recipe_detail_title_tv);
             recipeNameString = recipeNameString + " " +  this.getString(R.string.INGREDIENTS_LIST_TITLE);
             mRecipeNameString.setText(recipeNameString);
             //get ingredients list as a string Array
-            String ingredientsString = recipeDetailsJSONObject.getString("ingredients");
+            String ingredientsString = mRecipeDetailsJSONObject.getString("ingredients");
             JSONArray ingredientsJSONArray = new JSONArray(ingredientsString);
             //arrange the ingredients in a linear layout list
             LinearLayout activity_recipe_detail_ingredients_ll = findViewById(R.id.activity_recipe_detail_ingredients_ll);
@@ -98,24 +98,61 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepsAdap
             e.printStackTrace();
         }//end try JSOn
 
+        //if layout is tablet with sw > 600dp then display right panel with detail step fragment
+        if (this.getResources().getBoolean(R.bool.is_sw_600dp) ==  true){
+            String stepsString = null;
+            try {
+                stepsString = mRecipeDetailsJSONObject.getString("steps");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            String[] mArrayStepsData = NetworkUtilities.getArrayFromJSON(stepsString);
+            //by default display step 1
+            int currentPosition = 0;
+            String BUNDLE_STEP_DETAILS_STRING = this.getString(R.string.BUNDLE_STEP_DETAILS_STRING);
+            Bundle bundl = new Bundle();
+            bundl.putString(BUNDLE_STEP_DETAILS_STRING, mArrayStepsData[currentPosition]);
+
+            StepDetailFragment stepDetailFragment = new StepDetailFragment();
+            stepDetailFragment.setArguments(bundl);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .add(R.id.activity_recipe_detail_step_detail_framelayout, stepDetailFragment)
+                    .commit();
+        }
 
     }
 
     @Override
     public void onClick(String[] mStepData, int position) {
-        // Intent parameters: context, destination clas
-        Context context = this;
-        Class destinationClass = StepDetailActivity.class;
-        String INTENT_STEPS_ARRAY = this.getString(R.string.INTENT_STEPS_ARRAY);
-        String INTENT_STEPS_POSITION = this.getString(R.string.INTENT_STEPS_POSITION);
+        //if we are not on a tablet, then open a new activity
+        if (this.getResources().getBoolean(R.bool.is_sw_600dp) ==  false) {
+            // Intent parameters: context, destination clas
+            Context context = this;
+            Class destinationClass = StepDetailActivity.class;
+            String INTENT_STEPS_ARRAY = this.getString(R.string.INTENT_STEPS_ARRAY);
+            String INTENT_STEPS_POSITION = this.getString(R.string.INTENT_STEPS_POSITION);
 
-        //new intent with extra_text
-        Intent startDetailedActivityIntent = new Intent(context, destinationClass);
-        startDetailedActivityIntent.putExtra(INTENT_STEPS_ARRAY, mStepData);
-        startDetailedActivityIntent.putExtra(INTENT_STEPS_POSITION, position);
-        //start new activity with Intent
-        startActivity(startDetailedActivityIntent);
-
+            //new intent with extra_text
+            Intent startDetailedActivityIntent = new Intent(context, destinationClass);
+            startDetailedActivityIntent.putExtra(INTENT_STEPS_ARRAY, mStepData);
+            startDetailedActivityIntent.putExtra(INTENT_STEPS_POSITION, position);
+            //start new activity with Intent
+            startActivity(startDetailedActivityIntent);
+        }
+        //else we are on a tablet, then change reload the right panel fragment with the selected instruction
+        else
+        {
+            String BUNDLE_STEP_DETAILS_STRING = this.getString(R.string.BUNDLE_STEP_DETAILS_STRING);
+            Bundle bundl = new Bundle();
+            bundl.putString(BUNDLE_STEP_DETAILS_STRING, mStepData[position]);
+            StepDetailFragment stepDetailFragment = new StepDetailFragment();
+            stepDetailFragment.setArguments(bundl);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.activity_recipe_detail_step_detail_framelayout, stepDetailFragment)
+                    .commit();
+        }
 
     }
 }

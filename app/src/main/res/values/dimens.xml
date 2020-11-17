@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="main_grid_view_column_number">1</integer>
+    <bool name="is_sw_600dp">false</bool>
+</resources>
