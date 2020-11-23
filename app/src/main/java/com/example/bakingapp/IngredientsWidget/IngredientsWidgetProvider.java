@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.RemoteViews;
 
+import com.example.bakingapp.MainActivity.GetResponseFromHttpUrlwithOkHttp;
 import com.example.bakingapp.MainActivity.MainActivity;
 import com.example.bakingapp.MainActivity.NetworkUtilities;
 import com.example.bakingapp.R;
@@ -28,10 +29,8 @@ public class IngredientsWidgetProvider extends AppWidgetProvider {
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId, int recipePosition) {
-        String mApiKey = "";
-        String mApiKeyQueryParam = "";
+
         String mBaseUrl = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
-        URL mRecipesUrl = NetworkUtilities.getDataURL(mApiKey, mBaseUrl, mApiKeyQueryParam);
 
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.ingredients_widget);
         //set default onclick that open MainActivity
@@ -41,7 +40,7 @@ public class IngredientsWidgetProvider extends AppWidgetProvider {
         views.setOnClickPendingIntent(R.id.ingredients_widget_main_linearlayout, defaultPendingIntent);
         appWidgetManager.updateAppWidget(appWidgetId, views);
         //get the data and update the widgets
-        new IngredientsWidgetProvider.loadRecipesforWidget(views, appWidgetId , appWidgetManager, recipePosition).execute(mRecipesUrl);
+        new IngredientsWidgetProvider.loadRecipesforWidget(views, appWidgetId , appWidgetManager, recipePosition).execute(mBaseUrl);
 
     }
 
@@ -74,7 +73,7 @@ public class IngredientsWidgetProvider extends AppWidgetProvider {
     }
 
     //handle the view update within the asynctask to make sure the http request is over before you use the Json String
-    public static class loadRecipesforWidget extends AsyncTask<URL, Void, String> {
+    public static class loadRecipesforWidget extends AsyncTask<String, Void, String> {
 
         private RemoteViews mViews;
         private int mWidgetID;
@@ -96,11 +95,13 @@ public class IngredientsWidgetProvider extends AppWidgetProvider {
         }
 
         @Override
-        protected String doInBackground(URL... urls) {
-            URL url = urls[0];
+        protected String doInBackground(String... StringURLs) {
+            String url = StringURLs[0];
             String mRecipesData = null;
             try {
-                mRecipesData = NetworkUtilities.getResponseFromHttpUrl(url);
+                //mRecipesData = NetworkUtilities.getResponseFromHttpUrl(url);
+                GetResponseFromHttpUrlwithOkHttp getResponse = new GetResponseFromHttpUrlwithOkHttp();
+                mRecipesData = getResponse.run(url);
             } catch (IOException io){
                 io.printStackTrace();
             }

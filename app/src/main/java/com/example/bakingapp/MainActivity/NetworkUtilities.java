@@ -13,6 +13,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
 
+
 public class NetworkUtilities {
 
     //Build the URL to get the movies for Main activity
@@ -71,3 +72,6 @@ no need to use an object as the recipe data is already an array
     }
 
 }
+
+
+

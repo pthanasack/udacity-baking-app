@@ -48,14 +48,11 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.MainA
         //set the adapter to the RecyclerView
         mRecyclerView.setAdapter(mMainAdapter);
 
-
+        //hide the progress bar
         mProgressBar.setVisibility(View.VISIBLE);
-      // MainTextView.setVisibility(View.INVISIBLE);
-        String mApiKey = "";
-        String mApiKeyQueryParam = "";
+        //load the data
         String mBaseUrl = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
-        URL mRecipesUrl = NetworkUtilities.getDataURL(mApiKey, mBaseUrl, mApiKeyQueryParam);
-        new loadRecipes().execute(mRecipesUrl);
+        new loadRecipes().execute(mBaseUrl);
     }
 
     @Override
@@ -71,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.MainA
     }
 
 
-    public class loadRecipes extends AsyncTask<URL, Void, String> {
+    public class loadRecipes extends AsyncTask<String, Void, String> {
 
         @Override
         protected void onPreExecute() {
@@ -79,11 +76,14 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.MainA
         }
 
         @Override
-        protected String doInBackground(URL... urls) {
-            URL url = urls[0];
+        protected String doInBackground(String... stringURLs) {
+            //URL url = urls[0];
+            String stringURL = stringURLs[0];
             String mRecipesData = null;
             try {
-                    mRecipesData = NetworkUtilities.getResponseFromHttpUrl(url);
+                   // mRecipesData = NetworkUtilities.getResponseFromHttpUrl(url);
+                GetResponseFromHttpUrlwithOkHttp getResponse = new GetResponseFromHttpUrlwithOkHttp();
+                mRecipesData = getResponse.run(stringURL);
             } catch (IOException io){
                 io.printStackTrace();
             }
