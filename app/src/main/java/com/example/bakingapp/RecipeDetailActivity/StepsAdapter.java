@@ -1,16 +1,15 @@
-package com.example.bakingapp;
+package com.example.bakingapp.RecipeDetailActivity;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.bakingapp.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,7 +42,7 @@ class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsDataViewHolder
     //Click Handler -- End//
 
     @Override
-    public void onBindViewHolder(@NonNull final StepsDataViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final StepsDataViewHolder holder, final int position) {
         String jsonStringRecipeDisplayed = mStepsData[position];
         try {
             JSONObject jsonObjectRecipeDisplayed = new JSONObject(jsonStringRecipeDisplayed);
@@ -56,13 +55,16 @@ class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsDataViewHolder
             holder.mStepsTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //All card color is set to colorDefault
                     Context context = view.getContext();
+                    //change all textviews background to default
                     for(TextView mTextViewList : mTextViewList){
                         mTextViewList.setBackground(context.getResources().getDrawable(R.drawable.recipe_steps_list_background));
                     }
-                    //The selected card is set to colorSelected
+                    //The selected Textview is set to colorSelected
                     holder.mStepsTextView.setBackground(context.getResources().getDrawable(R.drawable.selected_recipe_steps_list_background));
+                    //open or update the fragment with a new activity
+                    ((RecipeDetailActivity) view.getContext()).onClickRecipeDetailActivity(mStepsData, position);
+
                 }
             });
 

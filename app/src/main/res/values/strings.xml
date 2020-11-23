@@ -12,4 +12,9 @@
     <string name="NEXT_BUTTON_LABEL">NEXT STEP</string>
     <string name="PREVIOUS_BUTTON_LABEL">PREVIOUS STEP</string>
     <string name="INGREDIENTS_LIST_TITLE">ingredients list:</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="IngredientsWidgetService_STRING">Add widget</string>
+    <string name="ACTION_UPDATE_WIDGET_INGREDIENTS_LIST">ACTION_UPDATE_WIDGET_INGREDIENTS_LIST</string>
+    <string name="EXTRA_RECIPE_POSITION_INTENT">EXTRA_RECIPE_POSITION_INTENT</string>
 </resources>

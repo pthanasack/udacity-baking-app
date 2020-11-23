@@ -1,4 +1,4 @@
-package com.example.bakingapp;
+package com.example.bakingapp.MainActivity;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.bakingapp.IngredientsWidget.IngredientsWidgetService;
+import com.example.bakingapp.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -80,9 +83,11 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainDataViewHolder> {
         @Override
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
-            //use adapter position + 1 because recipe starts at id=1 and adapter poistion at 0
+            //use adapter position + 1 because recipe starts at id=1 and adapter position at 0
             String clickMainData = mMainData[adapterPosition];
             mClickHandler.onClick(clickMainData);
+            //also launch widget service update so ingredients will be displayed according to selected recipe
+          IngredientsWidgetService.startActionUpdateWidgetIngredients(v.getContext(), adapterPosition);
         }
     }
 

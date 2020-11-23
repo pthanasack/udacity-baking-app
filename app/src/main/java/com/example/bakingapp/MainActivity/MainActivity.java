@@ -1,4 +1,4 @@
-package com.example.bakingapp;
+package com.example.bakingapp.MainActivity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,8 +10,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.bakingapp.R;
+import com.example.bakingapp.RecipeDetailActivity.RecipeDetailActivity;
 
 import java.io.IOException;
 import java.net.URL;

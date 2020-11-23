@@ -1,4 +1,4 @@
-package com.example.bakingapp;
+package com.example.bakingapp.StepDetail;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,8 @@ import android.widget.Button;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+
+import com.example.bakingapp.R;
 
 public class StepDetailActivity extends AppCompatActivity {
 

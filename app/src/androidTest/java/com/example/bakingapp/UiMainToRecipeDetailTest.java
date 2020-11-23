@@ -11,6 +11,8 @@ import androidx.test.espresso.Espresso;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.espresso.assertion.ViewAssertions;
 
+import com.example.bakingapp.MainActivity.MainActivity;
+
 @RunWith(AndroidJUnit4.class)
 public class UiMainToRecipeDetailTest {
     //using ActivityScenarioRule instead of activityTestRule

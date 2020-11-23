@@ -1,4 +1,4 @@
-package com.example.bakingapp;
+package com.example.bakingapp.MainActivity;
 
 import android.net.Uri;
 

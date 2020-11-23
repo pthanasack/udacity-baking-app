@@ -1,4 +1,4 @@
-package com.example.bakingapp;
+package com.example.bakingapp.RecipeDetailActivity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +11,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.bakingapp.MainActivity.NetworkUtilities;
+import com.example.bakingapp.R;
+import com.example.bakingapp.StepDetail.StepDetailActivity;
+import com.example.bakingapp.StepDetail.StepDetailFragment;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,7 +25,6 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepsAdap
     private String mRecipeDetailsString;
     private JSONObject mRecipeDetailsJSONObject;
 
-    //TODO 1 need to fix the back app button from StepsDetailActivity
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         //save the recipe details
@@ -123,8 +127,13 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepsAdap
 
     }
 
+    //empty onClick override in Activity as new activity is called from ViewHolder in StepsAdapter
     @Override
     public void onClick(String[] mStepData, int position) {
+    }
+
+    // method called from ViewHolder in StepsAdapter to open New Activity
+    public void onClickRecipeDetailActivity(String[] mStepData, int position) {
         //if we are not on a tablet, then open a new activity
         if (this.getResources().getBoolean(R.bool.is_sw_600dp) ==  false) {
             // Intent parameters: context, destination clas
